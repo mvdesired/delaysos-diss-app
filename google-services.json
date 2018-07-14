@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "528490677826",
+    "firebase_url": "https://diss-delay-sos.firebaseio.com",
+    "project_id": "diss-delay-sos",
+    "storage_bucket": "diss-delay-sos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528490677826:android:790ab4e50cc4a981",
+        "android_client_info": {
+          "package_name": "com.delaysos.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "528490677826-lnkh6oe0ruk8bhvj6i3hne5hn1augvk2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6LUqYvePhrR_Xtxsr6tYjSxfA2LQTno4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

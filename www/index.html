@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <!-- <link rel="stylesheet" type="text/css" href="css/index.css" /> -->
+    <link href="assets/icons/icons.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <title>Delay SOS</title>
+    <script type="text/javascript">
+        var globals = {
+            site_url : 'https://www.delaysos.com/',
+            mapKey : 'AIzaSyCM_PblP42dCiUkbglIpKPywGPx1Nh5edA',
+            spinner: '<svg class="image-upload-spinner-container gLL" width="20px" height="20px" viewBox="0 0 52 52"><circle class="path" cx="26px" cy="26px" r="20px" fill="none" stroke-width="7px"></circle></svg>'
+        }
+    </script>
+</head>
+
+<body>
+    <section class="login-sec">
+        <div class="login-overlay"></div>
+        <!--/login-overlay-->
+        <div class="ls-inner">
+            <div class="menubar">
+                <div class="container text-center">
+                    <img src="assets/image/sos-map-logo.png" alt="Delay SOS" height="60px" stle="margin:auto"/>
+                    <!-- <div class="logo">
+
+                    </div> -->
+                    <!--/logo-->
+                    <!-- <div class="main-menu">
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div> -->
+                    <div class="clearfix"></div>
+                </div>
+                <!--/container-->
+            </div>
+            <!--/menubar-->
+            <div class="log-reg-box">
+                <div class="login-body sign-in">
+                    <div class="lb-inner">
+                        <div class="lb-head">
+                            <h2>Sign in with </h2>
+                        </div>
+                        <!--/lb-head-->
+                        <div class="lb-social">
+                            <ul>
+                                <li><a class="fb fb-btn" href="javascript:;"></a></li>
+                                <li><a class="tw tw-btn" href="javascript:;"></a></li>
+                            </ul>
+                        </div>
+                        <!--/lb-social-->
+                        <div class="lb-divd">
+                            <span>or</span>
+                        </div>
+                        <div class="lb-form">
+                            <form name="dssLgFrm">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email Id" name="lEmail" required/>
+                                    <span><i class="lnr lnr-envelope"></i></span>
+                                    <!-- <div class="help-block">
+                                        Email ID is invalid.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" name="lPassword" required/>
+                                    <span><i class="lnr lnr-lock"></i></span>
+                                    <!-- <div class="help-block">
+                                        Password should not be empty.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <p><a href="javascript:;" class="change-form" data-open-form="reset" data-close-form="sign-in">Forgot Password?</a></p>
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <button type="submit" class="lbf-btn lb-btn">Sign In</button>
+                                </div>
+                                <b>Don't have an account? <a href="javascript:;" class="change-form" data-open-form="sign-up" data-close-form="sign-in">Sign Up</a></b>
+                            </form>
+                        </div>
+                        <!--/lb-form-->
+                    </div>
+                    <!--/lb-inner-->
+                </div>
+                <!--/login-body-->
+                <div class="login-body sign-up hidden">
+                    <div class="lb-inner">
+                        <div class="lb-head">
+                            <h2>Sign Up </h2>
+                        </div>
+                        <!--/lb-head-->
+                        <div class="lb-form">
+                            <form name="dssRgFrm">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Name" name="rName" required/>
+                                    <span><i class="lnr lnr-user"></i></span>
+                                    <!-- <div class="help-block">
+                                        Password should not be empty.
+                                    </div> -->
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email Id" name="rEmail" required/>
+                                    <span><i class="lnr lnr-envelope"></i></span>
+                                    <!-- <div class="help-block">
+                                        Email ID is invalid.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Mobile" name="rMobile" required/>
+                                    <span><i class="lnr lnr-smartphone"></i></span>
+                                    <!-- <div class="help-block">
+                                        Email ID is invalid.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Password" name="rPassword" required/>
+                                    <span><i class="lnr lnr-lock"></i></span>
+                                    <!-- <div class="help-block">
+                                        Password should not be empty.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Confirm Password" name="rCPassword" required/>
+                                    <span><i class="lnr lnr-lock"></i></span>
+                                    <!-- <div class="help-block">
+                                        Password should not be empty.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <button type="submit" class="lbf-btn rb-btn">Sign Up</button>
+                                </div>
+                                <b>Already have an account? <a  href="javascript:;" class="change-form" data-open-form="sign-in" data-close-form="sign-up">Sign In</a></b>
+                            </form>
+                        </div>
+                        <!--/lb-form-->
+                    </div>
+                    <!--/lb-inner-->
+                </div>
+
+               <!--/login-body-->
+                <div class="login-body reset hidden">
+                    <div class="lb-inner">
+                        <div class="lb-head">
+                            <h2>Resset Your Password </h2>
+                        </div>
+                        <!--/lb-head-->
+                        <div class="lb-form">
+                            <form name="dssRsFrm">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="Email Id" name="resetEmail" required/>
+                                    <span><i class="lnr lnr-envelope"></i></span>
+                                    <!-- <div class="help-block">
+                                        Email ID is invalid.
+                                    </div> -->
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                </div>
+                                <!--/form-group-->
+                                <div class="form-group">
+                                    <button type="submit" class="lbf-btn rsb-btn">Reset</button>
+                                </div>
+                                <b>Already have an account? <a  href="javascript:;" class="change-form" data-open-form="sign-in" data-close-form="reset">Sign In</a></b>
+                            </form>
+                        </div>
+                        <!--/lb-form-->
+                    </div>
+                    <!--/lb-inner-->
+                </div>
+                <!--/login-body-->
+            </div>
+            <!--/log-reg-box-->
+        </div>
+        <!--/ls-inner-->
+    </section>
+     <!--  -->
+    <div class="chat-sec hidden">
+        <section class="chat-map-sec">
+            <div class="cms-inner">
+                <div class="map-box">
+                    <div class="mb-back-mobile">
+                        <p>Back <span class="lnr lnr-arrow-left mb-back-mobile-btn"></span> </p>
+                    </div>
+                    <!--/mb-back-mobile-->
+                    <div id="vmap"></div>
+                </div>
+                <!--/chat-box-->
+                <div class="chat-box">
+                    <div class="cb-inner">
+                        <div class="chat-sec">
+                            <div class="cs-header">
+                                <div class="csh-logo">
+                                    <img src="assets/image/sos-map-logo.png" alt="Delay SOS" height="40px"/>
+                                    <!-- <img src="assets/image/sos-map-logo.png" alt="Delay SOS"/> -->
+                                </div>
+                                <!--/csh-logo-->
+                                <div class="csh-loc">
+                                    <a href="javascript:;" class="csh-dd-menu"><i class="lnr lnr-menu"></i></a>
+                                    <ul class="csh-dd-menu-list">
+                                        <li class="accLocBtn">
+                                            <a href="javascript:;"><i class="lnr lnr-map-marker"></i> Accident Location</a>
+                                        </li>
+                                        <li class="mapOpen">
+                                            <a href="javascript:;"><i class="lnr lnr-map"></i> View Map</a>
+                                        </li>
+                                        <li class="myProfile">
+                                            <a href="javascript:;"><i class="lnr lnr-user"></i> My Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="lgt-btn">
+                                                <i class="lnr lnr-exit-up"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--/csh-logo-->
+                                <div class="clearfix"></div>
+                            </div>
+                            <!--/cs-header-->
+                            <div class="cs-showarea">
+                                <div class="cssa-inner">
+                                </div>
+                                <!--/cssa-inner-->
+                            </div>
+                            <!--/cs-showarea-->
+                            <div class="cs-bottom">
+                                <div class="scb-typebox">
+                                    <div class="atch-show">
+                                        <ul></ul>
+                                    </div>
+                                    <!--/atch-show-->
+                                    <div class="scb-geoLocate">
+                                        <i class="lnr lnr-map-marker geo-location" ></i>
+                                    </div>
+                                    <div class="scb-fileatch">
+                                        <label for="chatAttach" class="get_picture">
+                                            <i class="lnr lnr-paperclip">
+                                                <input class="slct-file" type="file" id="chatAttach" accept="image/*,capture=camera" multiple/>
+                                            </i>
+                                        </label>
+                                    </div>
+                                    <textarea class="form-control main-msg-bx" placeholder="Write Here....." name="dsdMsg"></textarea>
+                                    <button type="submit" class="scbtb-btn"><i class="lnr lnr-rocket"></i></button>
+                                    <!--   ng-click="sendMessages()"-->
+                                </div>
+                                <!--/scb-typebox-->
+                            </div>
+                            <!--/cs-bottom-->
+                        </div>
+                        <!--/chat-sec-->
+                        <div class="accident-location">
+                            <div class="al-inner">
+                                <div class="ali-head">
+                                    <p>Accidents List <span class="lnr lnr-arrow-right closeAccLoc"></span> </p>
+                                </div>
+                                <!--/ali-head-->
+                                <div class="ali-box">
+                                    <ul></ul>
+                                </div>
+                                <!--/ali-box-->
+                            </div>
+                            <!--/al-inner-->
+                        </div>
+                        <div class="my-profile">
+                            <div class="mp-inner">
+                                <div class="mpi-head">
+                                    <p>My Profile <span class="lnr lnr-arrow-right closeMyProfile"></span> </p>
+                                </div>
+                                <!--/mpi-head-->
+                                <div class="mpi-box">
+                                    <div class="form-group">
+                                        <label for="mpPic" class="mpPic">
+                                            <em class="mpi-showimg"></em>
+                                            <i class="lnr lnr-camera"></i>
+                                            <span>Profile photo</span>
+                                            <small>(optional)</small>
+                                            <input type="file" id="mpPic" name="mpPic" accept="image/*;capture=camera" class="type-file">
+                                        </label>
+                                    </div>
+                                    <div class="mpi-inputcon">
+                                      <div class="form-group">
+                                        <label for="">
+                                            <b>Full Name</b>
+                                            <input type="text" class="form-control" name="mpName" value="">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">
+                                            <b>Email Id</b>
+                                            <input type="text" class="form-control" name="mpEmail" value="">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">
+                                            <b>Phone Number</b>
+                                            <input type="text" class="form-control" name="mpPhoneNumber" value="">
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="mpi-btn" type="button">
+                                            <i class="lnr lnr-cog"></i> Save
+                                        </button>
+                                    </div>
+                                    </div><!--/mpi-inputcon-->
+
+                                </div>
+                                <!--/ali-box-->
+                            </div>
+                            <!--/al-inner-->
+                        </div>
+                        <!--/accident-location-->
+                    </div>
+                    <!--/cb-inner-->
+                </div>
+                <!--/chat-box-->
+            </div>
+            <!--/cms-inner-->
+        </section>
+        <!--/chat-map-sec-->
+    </div>
+    <!--/login-sec-->
+    <div class="dss-noti hidden">
+        <div class="dss-overlay"></div>
+        <div class="dss-content">
+            <h2><strong></strong> <span></span></h2>
+            <div><button class="close-dss-noti">Close</button></div>
+            <!-- <p ng-bind=""></p> -->
+        </div>
+    </div>
+    <div class="mainLoader">
+        <img src="assets/image/sos-map-logo.png" alt="Delay SOS"/>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.js"></script>
+    <script type="text/javascript" src="assets/js/firebase-app.js"></script>
+    <script type="text/javascript" src="assets/js/firebase-auth.js"></script>
+    <script type="text/javascript" src="assets/js/firebase-database.js"></script>
+    <script type="text/javascript" src="assets/js/firebase-storage.js"></script>
+    <script type="text/javascript" src="assets/js/firebase-messaging.js"></script>
+    <script type="text/javascript" src="assets/js/markerclusterer.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMHVLUbgfV3tlsQnY4pBL8Kb5ck6o4fYA"></script>
+    <script type="text/javascript" src="assets/js/script.js"></script>
+</body>
+</html>
