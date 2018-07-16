@@ -862,7 +862,7 @@ function RnOnFirstGeo(){
       cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
         if(enabled){
           cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
-            if(enabled){*/
+            if(enabled){
               navigator.geolocation.getCurrentPosition(function(position){
                   latitude = position.coords.latitude;
                   longitude = position.coords.longitude;
