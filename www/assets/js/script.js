@@ -1017,7 +1017,7 @@ function regServiceWorker(){
         })
     });
 }*/
-function sendNotification(title,tstmsg,mType,image){
+function sendNotification(title,tstmsg,mType,image,picture){
     database.ref('/fcmTokens/').once('value').then(function(snapshot) {
         snapVal = snapshot.val();
         var notificationData = {};
@@ -1042,7 +1042,7 @@ function sendNotification(title,tstmsg,mType,image){
                 "tag":'DelaySOS',
                 "image": image,
                 "style":"picture",
-                "picture":image,
+                "picture":picture,
                 "summaryText":tstmsg,
                 "click_action": globals.site_url
             }
@@ -1056,7 +1056,7 @@ function sendNotification(title,tstmsg,mType,image){
                 "tag":'DelaySOS',
                 "image": image,
                 "style":"picture",
-                "picture":image,
+                "picture":picture,
                 "summaryText":tstmsg,
                 "click_action": globals.site_url
             }
