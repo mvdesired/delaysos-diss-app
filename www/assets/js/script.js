@@ -935,7 +935,7 @@ function regServiceWorker(){
             windows: {}
         });
         push.on('registration', function(data) {
-            database.ref('/fcmTokens').child(data.registrationId).set(fbAuth.currentUser.uid);
+            database.ref('/fcmTokens').child(data.registrationId).set({uid:fbAuth.currentUser.uid,reg_type:'phone'});
         });
         push.on('error', function(e) {
             console.error("push error = " + e.message);
@@ -1060,8 +1060,8 @@ function sendNotification(title,tstmsg,mType,image){
         }
         var tokensList = [];
         jQuery.each(snapVal,function(key,val){
-            if(val != fbAuth.currentUser.uid){
-                tokensList.push(key);
+            if(val.uid != fbAuth.currentUser.uid){
+                tokensList.push({regID:key,type:val.reg_type});
             }
         });
         $.ajax({type:'POST',url:globals.site_url+'/fcm-token-send/index.php',data:{to:tokensList,notiData:notificationData}}).done(function (response) {
