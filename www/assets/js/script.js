@@ -912,60 +912,37 @@ function showOnMap(lat,lng){
     map.setZoom(16);
 }
 function regServiceWorker(){
-    cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function(status){
-      console.log(JSON.stringify(status));
-        switch(status){
-            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-                console.log("Permission not yet requested");
-                cordova.plugins.diagnostic.requestRemoteNotificationsAuthorization({
-                    successCallback: function(){
-                        console.log("Successfully requested remote notifications authorization");
-                        var push = PushNotification.init({
-                          android: {
-                              senderID: "371285976427",
-                               icon: "sos",
-                               iconColor: '#28c8e2',
-                               forceShow : "true",
-                               vibrate : "true",
-                               sound : "true"
-                          },
-                          browser: {},
-                          ios: {
-                              senderID: "371285976427",
-                              icon: "sos",
-                              iconColor: '#28c8e2',
-                              alert: 'true',
-                              sound: 'true',
-                              vibration: 'true',
-                              badge: 'true'
-                          },
-                          windows: {}
-                      });
-                      push.on('registration', function(data) {
-                          database.ref('/fcmTokens').child(data.registrationId).set(fbAuth.currentUser.uid);
-                      });
-                      push.on('error', function(e) {
-                          console.error("push error = " + e.message);
-                      });
-                    },
-                    errorCallback: function(err){
-                       console.error("Error requesting remote notifications authorization: " + err);
-                    },
-                    types: [
-                        cordova.plugins.diagnostic.remoteNotificationType.ALERT,
-                        cordova.plugins.diagnostic.remoteNotificationType.SOUND,
-                        cordova.plugins.diagnostic.remoteNotificationType.BADGE
-                    ],
-                    omitRegistration: false
-                });
-                break;
-            case cordova.plugins.diagnostic.permissionStatus.DENIED:
-                console.log("Permission denied");
-                break;
-            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-                console.log("Permission granted");
-                break;
-        }
+    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enable){
+      console.log(JSON.stringify(enable));
+        if(enable){
+          var push = PushNotification.init({
+            android: {
+                senderID: "371285976427",
+                 icon: "sos",
+                 iconColor: '#28c8e2',
+                 forceShow : "true",
+                 vibrate : "true",
+                 sound : "true"
+            },
+            browser: {},
+            ios: {
+                senderID: "371285976427",
+                icon: "sos",
+                iconColor: '#28c8e2',
+                alert: 'true',
+                sound: 'true',
+                vibration: 'true',
+                badge: 'true'
+            },
+            windows: {}
+        });
+        push.on('registration', function(data) {
+            database.ref('/fcmTokens').child(data.registrationId).set(fbAuth.currentUser.uid);
+        });
+        push.on('error', function(e) {
+            console.error("push error = " + e.message);
+        });
+      }
     }, function(error){
         console.error("The following error occurred: "+error);
     });
