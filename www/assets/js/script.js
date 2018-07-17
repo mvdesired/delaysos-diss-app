@@ -321,7 +321,7 @@ jQuery(document).ready(function($) {
                           messagesRef.push(mRefAr).then(function(result) {
                             $('.main-msg-bx').val('');
                             showOnMap(latitude,longitude);
-                            sendNotification(currentUser.displayName || "DelaySOS",'Sent location','location',map_image);
+                            sendNotification(currentUser.displayName || "DelaySOS",'Sent location','location',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',map_image);
                             current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
                           }).catch(function(error) {
                               notiMsg('error','Error writing new message to Firebase Database');
@@ -597,7 +597,7 @@ function sendMessages(){
                         $('.atch-show').animate({bottom:'-200%',opacity:0},250);
                         onlyFirst = allFiles.split(',');
                         storage.refFromURL(onlyFirst[0]).getMetadata().then(function(metadata) {
-                            sendNotification(currentUser.displayName || "DelaySOS",msgText.val().trim() || 'Sent Image','image',metadata.downloadURLs[0]);
+                            sendNotification(currentUser.displayName || "DelaySOS",msgText.val().trim() || 'Sent Image','image',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',metadata.downloadURLs[0]);
                         }).catch(function(err){
                             notiMsg('error','Error writing new message to Firebase Database '+err);
                         });
@@ -626,7 +626,7 @@ function sendMessages(){
             }).then(function(result) {
               msgText.val('');
               jQuery('.scbtb-btn').children('i').removeClass('lnr-sync fa-spin').addClass('lnr-rocket');
-              sendNotification(currentUser.displayName || "DelaySOS",textMsg,'msg');
+              sendNotification(currentUser.displayName || "DelaySOS",textMsg,'msg',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png');
               messageSentAudio.play();
             }).catch(function(error) {
                 console.log(error);
