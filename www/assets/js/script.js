@@ -299,7 +299,7 @@ jQuery(document).ready(function($) {
                           placeNmae =  results[0].formatted_address;
                           map_image = getMapImage();
                           var mRefAr = {
-                            name: currentUser.displayName || '',
+                            name: currentUser.displayName,
                             text: '',
                             photoUrl: currentUser.photoURL || 'assets/image/profile_placeholder.png',
                             uid : currentUser.uid,
@@ -321,7 +321,7 @@ jQuery(document).ready(function($) {
                           messagesRef.push(mRefAr).then(function(result) {
                             $('.main-msg-bx').val('');
                             showOnMap(latitude,longitude);
-                            sendNotification(currentUser.displayName || "DelaySOS",'Sent location','location',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',map_image);
+                            sendNotification(currentUser.displayName,'Sent location','location',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',map_image);
                             current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
                           }).catch(function(error) {
                               notiMsg('error','Error writing new message to Firebase Database');
@@ -553,7 +553,7 @@ function sendMessages(){
         if(multifilesArray.length > 1){multifiles = true;}
         var currentUser = fbAuth.currentUser;
         messagesRef.push({
-          name: currentUser.displayName || '',
+          name: currentUser.displayName,
           text: msgText.val().trim() || '',
           imageUrl: loadingImg,
           photoUrl: currentUser.photoURL || 'assets/image/profile_placeholder.png',
@@ -597,7 +597,9 @@ function sendMessages(){
                         $('.atch-show').animate({bottom:'-200%',opacity:0},250);
                         onlyFirst = allFiles.split(',');
                         storage.refFromURL(onlyFirst[0]).getMetadata().then(function(metadata) {
-                            sendNotification(currentUser.displayName || "DelaySOS",msgText.val().trim() || 'Sent Image','image',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',metadata.downloadURLs[0]);
+                          var sentMessage = 'Sent Image';
+                          if(msgText.val().trim() != ''){sentMessage = msgText.val().trim();}
+                            sendNotification(currentUser.displayName,sentMessage,'image',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',metadata.downloadURLs[0]);
                         }).catch(function(err){
                             notiMsg('error','Error writing new message to Firebase Database '+err);
                         });
@@ -626,7 +628,7 @@ function sendMessages(){
             }).then(function(result) {
               msgText.val('');
               jQuery('.scbtb-btn').children('i').removeClass('lnr-sync fa-spin').addClass('lnr-rocket');
-              sendNotification(currentUser.displayName || "DelaySOS",textMsg,'msg',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png');
+              sendNotification(currentUser.displayName,textMsg,'msg',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png');
               messageSentAudio.play();
             }).catch(function(error) {
                 console.log(error);
