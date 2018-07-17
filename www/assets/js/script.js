@@ -236,11 +236,11 @@ jQuery(document).ready(function($) {
     $('.scbtb-btn').on('click',function(e){
         e.preventDefault();
         e.stopPropagation();
-        if(($('.main-msg-bx').val()).trim() != ''){
-          var current = $(this);
-          current.children('i').removeClass('lnr-rocket').addClass('lnr-sync fa-spin');
+        //if(($('.main-msg-bx').val()).trim() != ''){
+          //var current = $(this);
+          //current.children('i').removeClass('lnr-rocket').addClass('lnr-sync fa-spin');
           sendMessages();
-        }
+        //}
     });
     $('#chatAttach').on('change',function(e){
         e.preventDefault();
@@ -498,7 +498,7 @@ function onAuthStateChanged(user){
               $('.mpi-showimg').css({'background-image':'url(' + profilePicUrl + ')'});
           }
       });
-      //regServiceWorker();
+      regServiceWorker();
       RnOnFirstGeo();
       loadMessages(true);
       $('.login-sec').addClass('hidden')
@@ -548,6 +548,7 @@ function loadMessages(firstLoaded){
 function sendMessages(){
     var msgText = jQuery('.main-msg-bx');
     if(multifilesArray.length > 0 && isUserLoggedIn){
+        jQuery('.scbtb-btn').children('i').removeClass('lnr-rocket').addClass('lnr-sync fa-spin');
         var multifiles = false;
         if(multifilesArray.length > 1){multifiles = true;}
         var currentUser = fbAuth.currentUser;
@@ -594,7 +595,10 @@ function sendMessages(){
                         $('.scbtb-btn').children('i').removeClass('lnr-sync fa-spin').addClass('lnr-rocket');
                         $('#chatAttach').val('');
                         $('.atch-show').animate({bottom:'-200%',opacity:0},250);
-                        storage.refFromURL(fullPath).getMetadata().then(function(metadata) {
+                        onlyFirst = allFiles.split(',');
+                        console.log(onlyFirst);
+                        storage.refFromURL(onlyFirst[0]).getMetadata().then(function(metadata) {
+                          console.log(metadata);
                             sendNotification(currentUser.displayName || "DelaySOS",textMsg || 'Sent Image','image',metadata.downloadURLs[0]);
                         }).catch(function(err){
                             notiMsg('error','Error writing new message to Firebase Database '+err);
@@ -611,6 +615,7 @@ function sendMessages(){
     }
     else{
         if(msgText.val().trim() != '' && isUserLoggedIn){
+            jQuery('.scbtb-btn').children('i').removeClass('lnr-rocket').addClass('lnr-sync fa-spin');
             var currentUser = fbAuth.currentUser;
             var textMsg = msgText.val().trim();
             messagesRef.push({
@@ -859,7 +864,7 @@ function isUserLoggedIn(){
 /*Browser Notifications*/
 function RnOnFirstGeo(){
     if (navigator.geolocation) {
-      cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+      /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
         if(enabled){
           cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
             if(enabled){
@@ -879,7 +884,7 @@ function RnOnFirstGeo(){
         }
       },function(error){
         console.error(error);
-      });
+      });*/
     }
 }
 function initMap(){
@@ -1053,7 +1058,9 @@ function sendNotification(title,tstmsg,mType,image){
             }
         });
         $.ajax({type:'POST',url:globals.site_url+'/fcm-token-send/index.php',data:{to:tokensList,notiData:notificationData}}).done(function (response) {
+          console.log(response);
         }).fail(function(error,e,r) {
+          console.log(error,e,r);
           /* Act on the event */
         });
     });
