@@ -600,11 +600,12 @@ function sendMessages(){
                           var sentMessage = 'Sent Image';
                           if(msgText.val().trim() != ''){sentMessage = msgText.val().trim();}
                             sendNotification(currentUser.displayName,sentMessage,'image',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',metadata.downloadURLs[0]);
+                            msgText.val('');
                         }).catch(function(err){
                             notiMsg('error','Error writing new message to Firebase Database '+err);
                         });
                         setTimeout(function(){$('.atch-show ul').empty()},255);
-                        msgText.val('');
+
                     }
                 });
             })(k)
