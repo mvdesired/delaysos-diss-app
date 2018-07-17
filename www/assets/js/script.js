@@ -864,7 +864,7 @@ function isUserLoggedIn(){
 /*Browser Notifications*/
 function RnOnFirstGeo(){
     if (navigator.geolocation) {
-      /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+      cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
         if(enabled){
           cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
             if(enabled){
@@ -884,7 +884,7 @@ function RnOnFirstGeo(){
         }
       },function(error){
         console.error(error);
-      });*/
+      });
     }
 }
 function initMap(){
@@ -912,32 +912,61 @@ function showOnMap(lat,lng){
     map.setZoom(16);
 }
 function regServiceWorker(){
-    var push = PushNotification.init({
-            android: {
-                senderID: "528490677826",
-                // icon: "sos",
-                 iconColor: '#28c8e2',
-                // forceShow : "true",
-                // vibrate : "true",
-                // sound : "true"
-            },
-            browser: {},
-            ios: {
-                alert: 'true',
-                sound: 'true',
-                vibration: 'true',
-                badge: 'true'
-            },
-            windows: {}
-        });
-    //
-        push.on('registration', function(data) {
-            database.ref('/fcmTokens').child(data.registrationId).set(fbAuth.currentUser.uid);
-        });
-    //
-        push.on('error', function(e) {
-            console.error("push error = " + e.message);
-        });
+    cordova.plugins.diagnostic.getRemoteNotificationsAuthorizationStatus(function(status){
+      console.log(JSON.stringify(status));
+        switch(status){
+            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                console.log("Permission not yet requested");
+                cordova.plugins.diagnostic.requestRemoteNotificationsAuthorization({
+                    successCallback: function(){
+                        console.log("Successfully requested remote notifications authorization");
+                        var push = PushNotification.init({
+                          android: {
+                              senderID: "371285976427",
+                               icon: "sos",
+                               iconColor: '#28c8e2',
+                               forceShow : "true",
+                               vibrate : "true",
+                               sound : "true"
+                          },
+                          browser: {},
+                          ios: {
+                              alert: 'true',
+                              sound: 'true',
+                              vibration: 'true',
+                              badge: 'true'
+                          },
+                          windows: {}
+                      });
+                      push.on('registration', function(data) {
+                          database.ref('/fcmTokens').child(data.registrationId).set(fbAuth.currentUser.uid);
+                      });
+                      push.on('error', function(e) {
+                          console.error("push error = " + e.message);
+                      });
+                    },
+                    errorCallback: function(err){
+                       console.error("Error requesting remote notifications authorization: " + err);
+                    },
+                    types: [
+                        cordova.plugins.diagnostic.remoteNotificationType.ALERT,
+                        cordova.plugins.diagnostic.remoteNotificationType.SOUND,
+                        cordova.plugins.diagnostic.remoteNotificationType.BADGE
+                    ],
+                    omitRegistration: false
+                });
+                break;
+            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                console.log("Permission denied");
+                break;
+            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                console.log("Permission granted");
+                break;
+        }
+    }, function(error){
+        console.error("The following error occurred: "+error);
+    });
+
 }
 /*function sendNotification(title,tstmsg,mType,image){
     database.ref('/fcmTokens/').once('value').then(function(snapshot) {
