@@ -597,7 +597,7 @@ function sendMessages(){
                         $('.atch-show').animate({bottom:'-200%',opacity:0},250);
                         onlyFirst = allFiles.split(',');
                         storage.refFromURL(onlyFirst[0]).getMetadata().then(function(metadata) {
-                            sendNotification(currentUser.displayName || "DelaySOS",textMsg || 'Sent Image','image',metadata.downloadURLs[0]);
+                            sendNotification(currentUser.displayName || "DelaySOS",msgText.val().trim() || 'Sent Image','image',metadata.downloadURLs[0]);
                         }).catch(function(err){
                             notiMsg('error','Error writing new message to Firebase Database '+err);
                         });
