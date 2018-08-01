@@ -6,14 +6,6 @@ var config = {
     storageBucket: "diss-delay-sos-a8fb5.appspot.com",
     messagingSenderId: "371285976427"
 };
-/*var config = {
-    apiKey: "AIzaSyBoS-Gi0G53-UI03h9mhVHkEirWeyWi3kI",
-    authDomain: "diss-delay-sos.firebaseapp.com",
-    databaseURL: "https://diss-delay-sos.firebaseio.com",
-    projectId: "diss-delay-sos",
-    storageBucket: "diss-delay-sos.appspot.com",
-    messagingSenderId: "528490677826"
-  };*/
 firebase.initializeApp(config);
 const lcl = window.localStorage;
 const fbAuth = firebase.auth();
@@ -68,7 +60,6 @@ jQuery(document).ready(function($) {
             lcl.isLoggedIn = true;
             lcl.uid = result.uid;
             notiMsg('success','Successfully logged in');
-            //$timeout(function(){$scope.mainLoader = false;},2000);
             current.html(oldHtml);
         }).catch(function(error) {
           var errorCode = error.code;
@@ -229,8 +220,6 @@ jQuery(document).ready(function($) {
         fbAuth.signOut().then(function() {
             openLoader();
             lcl.isLoggedIn = false;
-            // angular.element(document.querySelector('.lb-btn')).removeClass('ng-clicked').html('Sign In');
-            // angular.element(document.querySelector('.rb-btn')).removeClass('ng-clicked').html('Sign Up');
             $('.login-sec').removeClass('hidden')
             $('.chat-sec').addClass('hidden');
             $('.cssa-inner').empty();
@@ -255,11 +244,7 @@ jQuery(document).ready(function($) {
     $('.scbtb-btn').on('click',function(e){
         e.preventDefault();
         e.stopPropagation();
-        //if(($('.main-msg-bx').val()).trim() != ''){
-          //var current = $(this);
-          //current.children('i').removeClass('lnr-rocket').addClass('lnr-sync fa-spin');
           sendMessages();
-        //}
     });
     $('#chatAttach').on('change',function(e){
         e.preventDefault();
@@ -285,16 +270,62 @@ jQuery(document).ready(function($) {
              r.readAsDataURL(e.target.files[k]);
         }
     })
+    $('.get_picture').on('click',function(){
+      $('.file-attach-wrapper').toggleClass('active');
+    });
+    $('.openCamera').on('click',function(){
+      $('.file-attach-wrapper').toggleClass('active');
+      navigator.camera.getPicture(function(imageURI){
+        var dataImage = "data:image/png;base64," + imageURI;
+        multifilesArray.push({"src":dataImage,"isUpload":0,"file":dataImage});
+        var createLiElem = $('<li />');
+        createLiElem.append('<span class="lnr lnr-cross remove-img"></span>');
+        var imageElement = $('<img />');
+        imageElement[0].src = dataImage;
+        createLiElem.append(imageElement);
+        createLiElem.appendTo('.atch-show ul');
+        $('.atch-show').animate({bottom:'100%',opacity:1});
+      }, function(message){
+        console.log(message);
+      }, {
+          quality: 50,
+          targetWidth:400,
+          targetHeight:400,
+          destinationType: Camera.DestinationType.DATA_URL
+      });
+    });
+    $('.openGallery').on('click',function(){
+      $('.file-attach-wrapper').toggleClass('active');
+      navigator.camera.getPicture(function(imageURI){
+        var dataImage = "data:image/png;base64," + imageURI;
+        multifilesArray.push({"src":dataImage,"isUpload":0,"file":dataImage});
+        var createLiElem = $('<li />');
+        createLiElem.append('<span class="lnr lnr-cross remove-img"></span>');
+        var imageElement = $('<img />');
+        imageElement[0].src = dataImage;
+        createLiElem.append(imageElement);
+        createLiElem.appendTo('.atch-show ul');
+        $('.atch-show').animate({bottom:'100%',opacity:1});
+      }, function(message){
+        console.log(message);
+      }, {
+          quality: 50,
+          targetWidth:400,
+          targetHeight:400,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          destinationType: Camera.DestinationType.DATA_URL
+      });
+    });
     $('.atch-show').on('click','.remove-img',function(e){
         e.preventDefault();
         var current = $(this);
-        curIndex = current.parents('li').index();
-        multifilesArray.splice(curIndex,1);
+        //curIndex = current.parents('li').index();
+        multifilesArray.splice(0,1);
         current.parents('li').animate({'left':'-100px',opacity:0},250);
         setTimeout(function(){current.parents('li').remove()},255);
         if(multifilesArray.length < 1){
             $('.atch-show').animate({bottom:'-200%',opacity:0},250);
-            $('#chatAttach').val('');
+            //$('#chatAttach').val('');
         }
     });
     $('.geo-location').on('click',function(e){
@@ -346,23 +377,6 @@ jQuery(document).ready(function($) {
             notiMsg('error','Error occurred. Error code: ' + error.message);
             current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
           },{enableHighAccuracy: true});
-          /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-            if(enabled){
-              cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
-                if(enabled){
-
-                }
-                else{
-                  notiMsg(404,"Please on your GPS");
-                }
-              });
-            }
-            else{
-              notiMsg(404,"Please enable your location");
-            }
-          },function(error){
-            console.error(error);
-          });*/
         }
     })
     $('.cssa-inner').on('click','.show-on-map',function(e){
@@ -392,12 +406,10 @@ jQuery(document).ready(function($) {
     $('.mapOpen a').on('click',function(e){
         e.preventDefault();
         $('.map-box').addClass('active');
-        //$('.map-box').animate({left: '0',opacity: 1},250);
     });
     $('.mb-back-mobile-btn').on('click',function(e){
         e.preventDefault();
         $('.map-box').removeClass('active');
-        //$('.map-box').animate({left: '-100%',opacity: 0},250);
     });
     $('.myProfile a').on('click',function(e){
         e.preventDefault();
@@ -501,13 +513,6 @@ jQuery(document).ready(function($) {
 /*AuthChangedd*/
 function onAuthStateChanged(user){
     if (user) { // User is signed in!
-      // Get profile pic and user's name from the Firebase user object.
-      // var profilePicUrl = user.photoURL;
-      // var userName = user.displayName;
-      // Set the user's profile pic and name.
-      //this.userPic.style.backgroundImage = 'url(' + (profilePicUrl || 'assets/image/profile_placeholder.png') + ')';
-      //this.userName.textContent = userName;
-      // We load currently existing chant messages.
       database.ref('/users/'+user.uid).once('value').then(function(snapshot) {
           var snapVal = snapshot.val();
           $('input[name="mpName"]').val(snapVal.displayName);
@@ -585,17 +590,19 @@ function sendMessages(){
         }).then(function(data) {
           // Upload the image to Cloud Storage.
           var allFiles = '';
-          for(var k=0;k<multifilesArray.length;k++){
-             $('.atch-show ul li').eq(k).prepend(uploadingImageTemplate);
-            multifilesArray[k].isUpload = 1;
-            var file = multifilesArray[k].file;
-            if (!file.type.match('image.*')) {
+          //for(var k=0;k<multifilesArray.length;k++){
+             $('.atch-show ul li').eq(0).prepend(uploadingImageTemplate);
+            multifilesArray[0].isUpload = 1;
+            var file = dataURItoBlob(multifilesArray[0].file);
+            /*if (!file.type.match('image.*')) {
                 notiMsg('error','You can only share images');
                 continue;
-            }
+            }*/
+
             var filePath = currentUser.uid + '/' + data.key + '/' + file.name;
-            (function(indexingK){
-                return storage.ref(filePath).put(file).then(function(snapshot) {
+            //(function(indexingK){
+                //return
+                storage.ref(filePath).put(file).then(function(snapshot) {
                     // Get the file's Storage URI and update the chat message placeholder.
                     var fullPath = snapshot.metadata.fullPath;
                     if(allFiles != ''){
@@ -604,16 +611,16 @@ function sendMessages(){
                     else{
                         allFiles = storage.ref(fullPath).toString();
                     }
-                    multifilesArray[indexingK].isUpload = 2;
-                    $('.atch-show ul li').eq(indexingK).children('.uploading').remove();
-                    $('.atch-show ul li').eq(indexingK).prepend(uploadedImageTemplate);
+                    multifilesArray[0].isUpload = 2;
+                    $('.atch-show ul li').eq(0).children('.uploading').remove();
+                    $('.atch-show ul li').eq(0).prepend(uploadedImageTemplate);
                     messageSentAudio.play();
-                    if(indexingK == multifilesArray.length-1){
+                    //if(indexingK == multifilesArray.length-1){
                         data.update({imageUrl: allFiles});
                         multiFiles = false;
                         multifilesArray = [];
                         $('.scbtb-btn').children('i').removeClass('lnr-sync fa-spin').addClass('lnr-rocket');
-                        $('#chatAttach').val('');
+                        //$('#chatAttach').val('');
                         $('.atch-show').animate({bottom:'-200%',opacity:0},250);
                         onlyFirst = allFiles.split(',');
                         storage.refFromURL(onlyFirst[0]).getMetadata().then(function(metadata) {
@@ -626,12 +633,18 @@ function sendMessages(){
                         });
                         setTimeout(function(){$('.atch-show ul').empty()},255);
 
-                    }
+                    //}
                 });
-            })(k)
-          }
+            //})(k)
+          //}
         }).catch(function(error) {
+          console.log(error);
+            $('.scbtb-btn').children('i').removeClass('lnr-sync fa-spin').addClass('lnr-rocket');
             notiMsg('error','There was an error uploading a file to Cloud Storage:'+error);
+            multiFiles = false;
+            multifilesArray = [];
+            $('.atch-show').animate({bottom:'-200%',opacity:0},250);
+            setTimeout(function(){$('.atch-show ul').empty()},255);
         });
     }
     else{
@@ -776,7 +789,6 @@ function displayChatElement(val,dataKey){
                     innerDiv.append('<div class="csci-img"><img src="'+pic+'"/></div>');
                     innerDiv.append('<div class="msg-meta-data mmd-r"><span class="uNt">'+val.name+'</span> - <span class="dTp">'+sendOn+'</span></div>');
                 }
-                //innerDiv.append('<div class="msg-meta-data mmd-r"><span class="uNt">'+val.name+'</span> - <span class="dTp">'+sendOn+'</span></div>');
                 chatUsers[uID] = {displayName:val.name,email:'',phoneNumber:'',photoURL:pic};
             }
             else{
@@ -791,7 +803,6 @@ function displayChatElement(val,dataKey){
                     innerDiv.append('<div class="csci-img"><img src="'+pic+'"/></div>');
                     innerDiv.append('<div class="msg-meta-data mmd-r"><span class="uNt">'+val.name+'</span> - <span class="dTp">'+sendOn+'</span></div>');
                 }
-                //innerDiv.append('<div class="msg-meta-data mmd-r"><span class="uNt">'+snapVal.displayName+'</span> - <span class="dTp">'+sendOn+'</span></div>');
                 chatUsers[uID] = {displayName:snapVal.displayName,email:snapVal.email,phoneNumber:snapVal.phoneNumber,photoURL:pic};
             }
             var chatMsgCnt = $('<div class="chat-msg-cnt" />');
@@ -890,23 +901,6 @@ function RnOnFirstGeo(){
           longitude = position.coords.longitude;
           map.setCenter({lat : latitude,lng : longitude});
       });
-      /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-        if(enabled){
-          cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
-            if(enabled){
-
-            }
-            else{
-              notiMsg(404,"Please on your GPS");
-            }
-          });
-        }
-        else{
-          notiMsg(404,"Please enable your location");
-        }
-      },function(error){
-        console.error(error);
-      });*/
     }
 }
 function initMap(){
@@ -934,9 +928,6 @@ function showOnMap(lat,lng){
     map.setZoom(16);
 }
 function regServiceWorker(){
-    /*cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enable){
-      console.log(JSON.stringify(enable));
-        if(enable){*/
           var push = PushNotification.init({
             android: {
                 senderID: "371285976427",
@@ -965,80 +956,7 @@ function regServiceWorker(){
         push.on('error', function(e) {
             console.error("push error = " + e.message);
         });
-      /*}
-    }, function(error){
-        console.error("The following error occurred: "+error);
-    });*/
-
 }
-/*function sendNotification(title,tstmsg,mType,image){
-    database.ref('/fcmTokens/').once('value').then(function(snapshot) {
-        snapVal = snapshot.val();
-        jQuery.each(snapVal,function(key,val){
-            if(val != fbAuth.currentUser.uid){
-                var notificationData = {};
-                if(mType == 'msg'){
-                    notificationData = {
-                        "title": title,
-                        "body": tstmsg,
-                        "icon": globals.site_url+"/assets/image/splash-screen.jpg",
-                        //"badge": globals.site_url+"/assets/image/sos-map-icon.png",
-                        "click_action": globals.site_url
-                    }
-                }
-                else if(mType == 'image'){
-                    notificationData = {
-                        "title": title,
-                        "body": tstmsg,
-                        "icon": globals.site_url+"/assets/image/splash-screen.jpg",
-                        "image": image,
-                        "style":"picture",
-                        "picture":image,
-                        "summaryText":tstmsg,
-                        "click_action": globals.site_url
-                    }
-                }
-                else if(mType == 'location'){
-                    notificationData = {
-                        "title": title,
-                        "body": tstmsg,
-                        "icon": globals.site_url+"/assets/image/splash-screen.jpg",
-                        "image": image,
-                        "style":"picture",
-                        "picture":image,
-                        "summaryText":tstmsg,
-                        "click_action": globals.site_url
-                    }
-                }
-                var settings = {
-                    "async": true,
-                    "crossDomain": true,
-                    "url": "https://fcm.googleapis.com/fcm/send",
-                    "method": "POST",
-                    "headers": {
-                      "authorization": "key=AAAAewx_xkI:APA91bFkjq0UTBotxuNTKHlCzNfmvB_hlQ9oAjGp74UdJVywfx7jdvJrxlIIui2zfMz9pJiftrKviis9CcrFh69L5w5bFXerd1C9YVrAn98zuNCHh50l5dkQcRybrjWqAOdbk4X1cixN",
-                      "content-type": "application/json",
-                      "cache-control": "no-cache"
-                    },
-                    "processData": false,
-                    "data": JSON.stringify(
-                          {
-                              "to" : key,
-                            //"to": "cxCPVMht5TU:APA91bGre_j8br0hWYopvpsZWpJNPsp3P3XZqhdUONfFxSGzrYgX99CkIvA3ZI_i-fA2JNZCukjhB4VKl_vUAf6VaAvMR3sxfkBEl-SQjJksWDv1toQnxN9P9qQDQsVfqI4b1f5mMVBj",
-                            //"to":"faTXuQHPeLk:APA91bEeJsbDv8Ahb4W9ggp9R850wI4EALmVeuwMq6XP1WbIQhKuEOAzSgqTYjJh9m6tCAUA48NUWlmHL87GJYFu6-st34i22DLzoDH-Mn8xhe9xEfabgk1CWkQ9RdCULllgEj5MrD0X",
-                            "notification": notificationData
-                          }
-                      )
-                }
-                $.ajax(settings).done(function (response) {
-                }).fail(function(error,e,r) {
-                  console.warn(error,e,r);
-                  /* Act on the event
-                });
-            }
-        })
-    });
-}*/
 function sendNotification(title,tstmsg,mType,image,picture){
     database.ref('/fcmTokens/').once('value').then(function(snapshot) {
         snapVal = snapshot.val();
@@ -1132,39 +1050,14 @@ function curTimeStamp(){
     var utcDate = dt.toUTCString();
     return utcDate
 }
-/*function onDeviceReady() {
-    document.removeEventListener('deviceready', onDeviceReady, false);
-    // Set AdMobAds options:
-    admob.setOptions({
-        publisherId: "pub-7883687528937610",  // Required
-        isTesting:true,
-        offsetStatusBar:true,
-        overlap:true,
-        autoShowBanner:true
-    },function(response){
-        console.log('AdMob Success');
-        console.log(response);
-        admob.createBannerView({
-          publisherId: "pub-7883687528937610",
-          autoShowBanner: true,
-          isTesting:true,
-          offsetStatusBar:true,
-          overlap:true
-        });
-        admob.showBannerAd(true);
-      },function(response){
-      console.log('AdMob Faluire');
-      console.log(response);
-    });
-    admob.createBannerView({
-      publisherId: "pub-7883687528937610",
-      autoShowBanner: true,
-      isTesting:true,
-      offsetStatusBar:true,
-      overlap:true
-    });
-    console.log('AdMob ShowBanner True');
-    console.log(JSON.stringify(admob));
-    console.log('AdMob Consoling');
+function dataURItoBlob(dataURI) {
+  var binary = atob(dataURI.split(',')[1]);
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  var array = [];
+  for (var i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+  return new Blob([new Uint8Array(array)], {
+    type: mimeString
+  });
 }
-document.addEventListener("deviceready", onDeviceReady, false);*/

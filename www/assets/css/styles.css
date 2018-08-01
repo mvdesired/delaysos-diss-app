@@ -2239,6 +2239,112 @@ button .image-upload-spinner-container{position:relative;}
     transform: rotate(359deg);
   }
 }
+
+.file-attach-wrapper{
+  position: absolute;
+  bottom: -100px;
+  width: 93%;
+  border-radius: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 15px 40px;
+  background-color: #FFF;
+  border: 1px solid #c5c5c5;
+  -webkit-transition:all ease-in-out .3s;
+  -moz-transition:all ease-in-out .3s;
+  -ms-transition:all ease-in-out .3s;
+  -o-transition:all ease-in-out .3s;
+  transition:all ease-in-out .3s;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.file-attach-wrapper .faw-item{
+  width: 50%;
+  float: left;
+  padding: 15px;
+  text-align: center;
+  font-family: 'josefin_sansregular';
+  color: #8a8a8a;
+  font-weight: bold;
+}
+.file-attach-wrapper .faw-item .faw-item-content{
+  margin: auto;
+  display: table;
+  line-height: normal;
+  cursor: pointer;
+}
+.file-attach-wrapper .faw-item .faw-item-content i{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 22px;
+  color: #FFF;
+  border-radius: 50%;
+  background-color: #28c7e1;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  box-shadow: 1px 1px 9px #b1b1b1;
+  cursor: pointer;
+  outline: none;
+}
+.file-attach-wrapper .faw-item .faw-item-content span{
+  display: block;
+  font-size: 17px;
+}
+
+.media-attached-wrapper{
+  position: absolute;
+  bottom: -100px;
+  width: 93%;
+  border-radius: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  padding: 15px 40px;
+  background-color: #FFF;
+  border: 1px solid #c5c5c5;
+  -webkit-transition: all ease-in-out .3s;
+  -moz-transition: all ease-in-out .3s;
+  -ms-transition: all ease-in-out .3s;
+  -o-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+.file-attach-wrapper.active, .media-attached-wrapper.active{
+  -webkit-transition:all ease-in-out .3s;
+  -moz-transition:all ease-in-out .3s;
+  -ms-transition:all ease-in-out .3s;
+  -o-transition:all ease-in-out .3s;
+  transition:all ease-in-out .3s;
+  bottom: 66px;
+}
+.media-attached-wrapper .maW-item{
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+.media-attached-wrapper .maW-item img{
+  width: 100%;
+  height: 100%;
+}
+.media-attached-wrapper .maW-item span{
+  position: absolute;
+  top: -3px;
+  right: -4px;
+  cursor: pointer;
+}
+.media-attached-wrapper .maW-item span i{
+  font-size: 17px;
+  color: #ff6e41;
+  background-color: #FFF;
+  border-radius: 50%;
+}
 @media only screen and (min-width: 576px) {
     .container {
         max-width: 540px
