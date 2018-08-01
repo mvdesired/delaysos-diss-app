@@ -15,7 +15,7 @@
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="750" />
     <preference name="StatusBarBackgroundColor" value="#28c8e2" />
-    <preference name="cordova.plugins.diagnostic.modules" value="LOCATION WIFI CAMERA NOTIFICATIONS MICROPHONE" />
+    <!-- <preference name="cordova.plugins.diagnostic.modules" value="LOCATION WIFI CAMERA NOTIFICATIONS MICROPHONE" /> -->
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
     <!-- <plugin name="phonegap-admob" source="npm" spec="~4.1.15" /> -->
     <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
