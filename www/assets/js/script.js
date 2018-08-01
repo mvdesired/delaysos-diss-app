@@ -940,20 +940,21 @@ function regServiceWorker(){
           var push = PushNotification.init({
             android: {
                 senderID: "371285976427",
-                 icon: "sos",
+                 //icon: "sos",
                  iconColor: '#28c8e2',
                  forceShow : "true",
-                 vibrate : "true",
+                 //vibrate : "true",
                  sound : "true"
             },
             browser: {},
             ios: {
                 senderID: "371285976427",
-                icon: "sos",
+                //icon: "sos",
+                forceShow : "true",
                 iconColor: '#28c8e2',
                 alert: 'true',
                 sound: 'true',
-                vibration: 'true',
+                //vibration: 'true',
                 badge: 'true'
             },
             windows: {}

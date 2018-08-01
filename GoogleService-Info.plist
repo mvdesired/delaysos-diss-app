@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>528490677826-5954fidbhvmpjke03tgcp8gjeedm9s3i.apps.googleusercontent.com</string>
+	<string>371285976427-mrs4vj9vfu3nioh80tj52ejrslclt94d.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.528490677826-5954fidbhvmpjke03tgcp8gjeedm9s3i</string>
+	<string>com.googleusercontent.apps.371285976427-mrs4vj9vfu3nioh80tj52ejrslclt94d</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAWgenP9HIXAUc-GIeg8Od0WS_6NR682jI</string>
+	<string>AIzaSyDdklARTPBwFpctsZmza-gJIQXnciA-9g0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>528490677826</string>
+	<string>371285976427</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.delaysos.chatapp</string>
+	<string>6K6VYTGX5U.com.delaysos.chat</string>
 	<key>PROJECT_ID</key>
-	<string>diss-delay-sos</string>
+	<string>diss-delay-sos-a8fb5</string>
 	<key>STORAGE_BUCKET</key>
-	<string>diss-delay-sos.appspot.com</string>
+	<string>diss-delay-sos-a8fb5.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:528490677826:ios:790ab4e50cc4a981</string>
+	<string>1:371285976427:ios:a44751314b3e64a3</string>
 	<key>DATABASE_URL</key>
-	<string>https://diss-delay-sos.firebaseio.com</string>
+	<string>https://diss-delay-sos-a8fb5.firebaseio.com</string>
 </dict>
 </plist>
