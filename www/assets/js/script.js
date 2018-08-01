@@ -121,6 +121,25 @@ jQuery(document).ready(function($) {
               current.html(oldHtml);
         });
     });
+    $(document).on('click','.rsb-btn',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var current = $(this);
+        var lFrm = current.parents('form')[0];
+        var resetEmail = lFrm.resetEmail.value;
+        var oldHtml = current.html();
+        current.html(globals.spinner);
+        fbAuth.sendPasswordResetEmail(resetEmail)
+        .then(function(result){
+            current.html(oldHtml);
+            notiMsg('success','Please check your email for resetting password');
+        })
+        .catch(function(error){
+            var jsonS = JSON.parse(error.message);
+            notiMsg('error',jsonS.error.message);
+            current.html(oldHtml);
+        });
+    });
     $(document).on('click','.fb-btn',function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -282,55 +301,56 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         var current = $(this);
         if (navigator.geolocation) {
-          cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+          current.removeClass('lnr-map-marker').addClass('lnr-sync fa-spin');
+          navigator.geolocation.getCurrentPosition(function(position){
+              latitude = position.coords.latitude;
+              longitude = position.coords.longitude;
+              var currentUser = fbAuth.currentUser;
+              // Add a new message entry to the Firebase Database.
+              $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true&key=AIzaSyCvP5SCIU8gw1z4qaawNHZTPgqgQClpGSc')
+              .then(function(response){
+                  var results = response.results;
+                  //$scope.randomLatLng();
+                  placeNmae =  results[0].formatted_address;
+                  map_image = getMapImage();
+                  var mRefAr = {
+                    name: currentUser.displayName,
+                    text: '',
+                    photoUrl: currentUser.photoURL || 'assets/image/profile_placeholder.png',
+                    uid : currentUser.uid,
+                    multiFiles:false,
+                    location:true,
+                    mapImage: map_image,
+                    latitude: latitude,
+                    longitude: longitude,
+                    placeName: placeNmae,
+                    send_on:curTimeStamp()
+                  };
+                  marker = new google.maps.Marker({
+                      map: map,
+                      draggable: true,
+                      animation: google.maps.Animation.DROP,
+                      position: {lat: latitude, lng: longitude}
+                  });
+                  marker.setMap(map);
+                  messagesRef.push(mRefAr).then(function(result) {
+                    $('.main-msg-bx').val('');
+                    showOnMap(latitude,longitude);
+                    sendNotification(currentUser.displayName,'Sent location','location',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',map_image);
+                    current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
+                  }).catch(function(error) {
+                      notiMsg('error','Error writing new message to Firebase Database');
+                  });
+              });
+          },function(error){
+            notiMsg('error','Error occurred. Error code: ' + error.message);
+            current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
+          },{enableHighAccuracy: true});
+          /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
             if(enabled){
               cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
                 if(enabled){
-                  current.removeClass('lnr-map-marker').addClass('lnr-sync fa-spin');
-                  navigator.geolocation.getCurrentPosition(function(position){
-                      latitude = position.coords.latitude;
-                      longitude = position.coords.longitude;
-                      var currentUser = fbAuth.currentUser;
-                      // Add a new message entry to the Firebase Database.
-                      $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true&key=AIzaSyCvP5SCIU8gw1z4qaawNHZTPgqgQClpGSc')
-                      .then(function(response){
-                          var results = response.results;
-                          //$scope.randomLatLng();
-                          placeNmae =  results[0].formatted_address;
-                          map_image = getMapImage();
-                          var mRefAr = {
-                            name: currentUser.displayName,
-                            text: '',
-                            photoUrl: currentUser.photoURL || 'assets/image/profile_placeholder.png',
-                            uid : currentUser.uid,
-                            multiFiles:false,
-                            location:true,
-                            mapImage: map_image,
-                            latitude: latitude,
-                            longitude: longitude,
-                            placeName: placeNmae,
-                            send_on:curTimeStamp()
-                          };
-                          marker = new google.maps.Marker({
-                              map: map,
-                              draggable: true,
-                              animation: google.maps.Animation.DROP,
-                              position: {lat: latitude, lng: longitude}
-                          });
-                          marker.setMap(map);
-                          messagesRef.push(mRefAr).then(function(result) {
-                            $('.main-msg-bx').val('');
-                            showOnMap(latitude,longitude);
-                            sendNotification(currentUser.displayName,'Sent location','location',currentUser.photoURL || globals.site_url+'/assets/image/profile_placeholder.png',map_image);
-                            current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
-                          }).catch(function(error) {
-                              notiMsg('error','Error writing new message to Firebase Database');
-                          });
-                      });
-                  },function(error){
-                    notiMsg('error','Error occurred. Error code: ' + error.message);
-                    current.removeClass('lnr-sync fa-spin').addClass('lnr-map-marker');
-                  },{enableHighAccuracy: true});
+
                 }
                 else{
                   notiMsg(404,"Please on your GPS");
@@ -342,7 +362,7 @@ jQuery(document).ready(function($) {
             }
           },function(error){
             console.error(error);
-          });
+          });*/
         }
     })
     $('.cssa-inner').on('click','.show-on-map',function(e){
@@ -865,15 +885,16 @@ function isUserLoggedIn(){
 /*Browser Notifications*/
 function RnOnFirstGeo(){
     if (navigator.geolocation) {
-      cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+      navigator.geolocation.getCurrentPosition(function(position){
+          latitude = position.coords.latitude;
+          longitude = position.coords.longitude;
+          map.setCenter({lat : latitude,lng : longitude});
+      });
+      /*cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
         if(enabled){
           cordova.plugins.diagnostic.isGpsLocationEnabled(function(enabled){
             if(enabled){
-              navigator.geolocation.getCurrentPosition(function(position){
-                  latitude = position.coords.latitude;
-                  longitude = position.coords.longitude;
-                  map.setCenter({lat : latitude,lng : longitude});
-              });
+
             }
             else{
               notiMsg(404,"Please on your GPS");
@@ -885,7 +906,7 @@ function RnOnFirstGeo(){
         }
       },function(error){
         console.error(error);
-      });
+      });*/
     }
 }
 function initMap(){
@@ -913,9 +934,9 @@ function showOnMap(lat,lng){
     map.setZoom(16);
 }
 function regServiceWorker(){
-    cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enable){
+    /*cordova.plugins.diagnostic.isRemoteNotificationsEnabled(function(enable){
       console.log(JSON.stringify(enable));
-        if(enable){
+        if(enable){*/
           var push = PushNotification.init({
             android: {
                 senderID: "371285976427",
@@ -943,10 +964,10 @@ function regServiceWorker(){
         push.on('error', function(e) {
             console.error("push error = " + e.message);
         });
-      }
+      /*}
     }, function(error){
         console.error("The following error occurred: "+error);
-    });
+    });*/
 
 }
 /*function sendNotification(title,tstmsg,mType,image){
