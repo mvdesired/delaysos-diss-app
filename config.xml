@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.delaysos.app" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.delaysos.chat" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>DelaySOS</name>
     <description>
         An app that provides instant information from other drivers regarding accidents and traffic jams by providing the ability to chat with other drivers. As drivers are stuck in endless traffic jams they can now communicate and send pictures or location maps to other fellow drivers to interact with each other to help ease the unknowns regarding a long traffic jams. As a driver stuck in an endless traffic jam you can now ask questions to fellow drivers and get instant accident information. Drivers will no longer sit helplessly in never ending traffic jams. Delaysos eliminates the suspense of not knowing what happened ahead when stuck in a traffic jam. It also allows instant communication with other drivers or even provide a portal that authorities can access to find out details regarding specific traffic or accident information.
