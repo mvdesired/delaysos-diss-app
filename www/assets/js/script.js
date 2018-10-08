@@ -6,13 +6,6 @@ var config = {
     storageBucket: "diss-delay-sos-a8fb5.appspot.com",
     messagingSenderId: "371285976427"
 };
-document.addEventListener('deviceready', onDeviceReady, false);
-function onDeviceReady() {
-    setTimeout(function() {
-    navigator.splashscreen.hide();
-}, 5000);
-
-}
 firebase.initializeApp(config);
 const lcl = window.localStorage;
 const fbAuth = firebase.auth();
