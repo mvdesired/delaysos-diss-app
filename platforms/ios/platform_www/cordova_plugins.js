@@ -440,7 +440,7 @@ module.exports.metadata =
   "cordova-plugin-statusbar": "2.4.2",
   "cordova-plugin-vibration": "3.1.0",
   "cordova-plugin-whitelist": "1.3.3",
-  "phonegap-plugin-push": "1.11.1"
+  "phonegap-plugin-push": "2.2.3"
 };
 // BOTTOM OF METADATA
 });
