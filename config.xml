@@ -26,10 +26,10 @@
     <plugin name="cordova-plugin-statusbar" source="npm" spec="~2.1.3" />
     <plugin name="cordova-plugin-vibration" source="npm" spec="~3.1.0" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
-    <plugin name="phonegap-plugin-push" source="npm" spec="2.1.2">
+    <!-- <plugin name="phonegap-plugin-push" source="npm" spec="2.1.2">
         <variable name="SENDER_ID" value="371285976427" />
         <variable name="FCM_VERSION" value="11.0.1" />
-    </plugin>
+    </plugin> -->
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />

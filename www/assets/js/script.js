@@ -523,7 +523,7 @@ function onAuthStateChanged(user){
               $('.mpi-showimg').css({'background-image':'url(' + profilePicUrl + ')'});
           }
       });
-      regServiceWorker();
+      //regServiceWorker();
       RnOnFirstGeo();
       loadMessages(true);
       $('.login-sec').addClass('hidden')
