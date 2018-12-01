@@ -11,7 +11,7 @@
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
-    <icon src="www/res/icon/ios/icon.png" width="1024" height="1024" />
+    <icon src="www/res/icon/ios/ds-icon.png" width="1024" height="1024" />
     <preference name="phonegap-version" value="cli-8.0.0" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="2000" />
