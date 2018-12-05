@@ -16,6 +16,7 @@
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="2000" />
     <preference name="StatusBarBackgroundColor" value="#28c8e2" />
+    <preference name="CAMERA_PERMISSION_REASON" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
     <plugin name="cordova-plugin-device" source="npm" spec="~1.1.1" />
@@ -110,6 +111,15 @@
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>DelaySOS wants to use your camera</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>DelaySOS wants to use your library</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>DelaySOS wants to use your location</string>
+        </config-file>
         <resource-file src="GoogleService-Info.plist" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
